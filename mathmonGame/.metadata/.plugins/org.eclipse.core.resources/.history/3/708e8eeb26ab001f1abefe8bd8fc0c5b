@@ -1,0 +1,152 @@
+package main;
+
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+public class MainMenuFrame extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    MainMenuFrame frame = new MainMenuFrame();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Custom JPanel to paint the background image.
+     */
+    class BackgroundPanel extends JPanel {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Image backgroundImage;
+
+        public BackgroundPanel() {
+            try {
+                // Load the background image
+                backgroundImage = ImageIO.read(getClass().getResourceAsStream("/picBackgrounds/picMenuBackground.jpg"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (backgroundImage != null) {
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        }
+    }
+
+    /**
+     * Create the frame.
+     */
+    public MainMenuFrame() {
+        setSize(1080, 630);
+        setResizable(false);
+        setTitle("Main Menu");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        // Use the custom panel for the background
+        contentPane = new BackgroundPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+
+        JButton btnStart = new JButton("START");
+        btnStart.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+        JButton btnInstructions = new JButton("INSTRUCTIONS");
+        btnInstructions.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+        JButton btnLeaderboards = new JButton("LEADERBOARDS");
+        btnLeaderboards.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+        JButton btnAbout = new JButton("ABOUT");
+        btnAbout.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+        btnStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the Main Menu
+                mathmonMain gameFrame = new mathmonMain();
+                gameFrame.setVisible(true); // Show the Game Frame
+            }
+        });
+
+        btnLeaderboards.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the Main Menu
+                mathmonLeaderboards leaderboardsFrame = new mathmonLeaderboards();
+                leaderboardsFrame.setVisible(true); // Show the Game Frame
+            }
+        });
+
+        btnAbout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the Main Menu
+                mathmonAbout aboutFrame = new mathmonAbout();
+                aboutFrame.setVisible(true); // Show the Game Frame
+            }
+        });
+
+        GroupLayout gl_contentPane = new GroupLayout(contentPane);
+        gl_contentPane.setHorizontalGroup(
+            gl_contentPane.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(440)
+                    .addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(482, Short.MAX_VALUE))
+                .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(395)
+                    .addComponent(btnInstructions, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(480, Short.MAX_VALUE))
+                .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(420)
+                    .addComponent(btnLeaderboards, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(497))
+                .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(432)
+                    .addComponent(btnAbout, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(512, Short.MAX_VALUE))
+        );
+        gl_contentPane.setVerticalGroup(
+            gl_contentPane.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(116)
+                    .addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18)
+                    .addComponent(btnInstructions, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18)
+                    .addComponent(btnLeaderboards, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18)
+                    .addComponent(btnAbout, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(266, Short.MAX_VALUE))
+        );
+        contentPane.setLayout(gl_contentPane);
+    }
+}
