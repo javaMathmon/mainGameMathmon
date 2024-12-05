@@ -123,6 +123,7 @@ public class Player extends Entity{
 				System.out.println("Time Warp: " + timeWarp);
 				break;
 			}
+			gp.playSE(4);
 		}
 	}
 	
