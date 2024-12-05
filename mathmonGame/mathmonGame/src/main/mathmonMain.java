@@ -109,6 +109,7 @@ public class mathmonMain extends JFrame implements KeyListener{
 				gamePanel.requestFocusInWindow();
 				gamePanel.setUpGame();
 				gamePanel.startGameThread();
+				//CHANGES
 		}
 	}
 
