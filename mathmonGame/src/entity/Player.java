@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+
+import battle.mathmonBattle;
 import main.KeyHandler;
 import main.mathmonChooseAPlayer;
 import main.mathmonGamePanel;
@@ -19,6 +22,7 @@ public class Player extends Entity{
 	public int maxlife;
 	public int life;
 	public int level;
+	public int powerSurge, healingPotion, timeWarp, lives; 
 	
 	public int powerSurge, healingPotion, timeWarp; 
 	public mathmonChooseAPlayer playerPic = new mathmonChooseAPlayer();
@@ -36,6 +40,9 @@ public class Player extends Entity{
 		solidAreaDefaultY = solidArea.y;
 		solidArea.width = 32;
 		solidArea.height = 32;
+		
+		HP = 100;
+		lives = 3;
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -137,6 +144,20 @@ public class Player extends Entity{
 				powerSurge++;
 				gp.obj[index] = null;
 				System.out.println("Power Surge: " + powerSurge);
+
+				if(powerSurge==2) {
+					mathmonBattle newBattle = null;
+					try {
+						newBattle = new mathmonBattle(gp);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					gp.gameState = gp.pauseState;
+					newBattle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					//newBattle.startBattleThread();
+					newBattle.setVisible(true);
+				}
 				break;
 			case("Healing Potion"):
 				healingPotion++;
@@ -190,17 +211,3 @@ public class Player extends Entity{
 	
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

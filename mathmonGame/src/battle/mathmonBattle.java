@@ -6,6 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import main.mathmonGamePanel;
+import main.mathmonMain;
+import entity.NPC_Monster1;
+import entity.Player;
+
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -22,12 +28,16 @@ import java.awt.event.ActionEvent;
 public class mathmonBattle extends JFrame {
 	public static final int CANVAS_WIDTH = 400;
 	public static final int CANVAS_HEIGHT = 140;
-	public int enemyHealth = 100;//temporary
+	//public int enemyHealth = 100;//temporary
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	mathmonGamePanel gp;
+	Player player;
+	Thread battleThread;
+	NPC_Monster1 monster;
 	
-	public int battleChoice = 0, questionCount = 0, randomNum, attackDamage; //0 if wala pa, 1 if fight, 2 if power up
+	public int battleChoice = 0, questionCount = 0, randomNum, attackDamage, receivedDamage; //0 if wala pa, 1 if fight, 2 if power up, 3 if answering
 	public String questions[] = new String[40], answers[] = new String[40], answerInput;
 
 	/**
@@ -37,8 +47,9 @@ public class mathmonBattle extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mathmonBattle frame = new mathmonBattle();
-					frame.setVisible(true);
+					//mathmonGamePanel gp = new mathmonGamePanel();
+					//mathmonBattle frame = new mathmonBattle(gp);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,7 +60,8 @@ public class mathmonBattle extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public mathmonBattle() throws IOException {
+	public mathmonBattle(mathmonGamePanel gp) throws IOException {
+		this.gp = gp;
 		importQuestions();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -67,101 +79,46 @@ public class mathmonBattle extends JFrame {
 		buttonPanel.setLayout(null);
 		
 		JButton btnAttack1 = new JButton("QUICK ATTACK");
-		btnAttack1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				randomNum = 0 + (int) (Math.random() * (((9) - 0) + 1));
-				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
-				attackInput(answerInput, randomNum);
-				//System.out.println(answerInput + "\n" + answers[randomNum]);
-				//System.out.println(questions[randomNum]/* + " " + randomNum*/);
-				//System.out.println(answers[randomNum]);
-				//answer form class
-			}
-		});
 		btnAttack1.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnAttack1.setBounds(10, 10, 240, 60);
 		buttonPanel.add(btnAttack1);
 		
 		JButton btnAttack2 = new JButton("HEADBUTT");
-		btnAttack2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				randomNum = 10 + (int) (Math.random() * (((19) - 10) + 1));
-				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
-				attackInput(answerInput, randomNum);
-			}
-		});
 		btnAttack2.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnAttack2.setBounds(255, 10, 240, 60);
 		buttonPanel.add(btnAttack2);
 		
 		JButton btnAttack3 = new JButton("MEGA PUNCH");
-		btnAttack3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				randomNum = 20 + (int) (Math.random() * (((29) - 20) + 1));
-				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
-				attackInput(answerInput, randomNum);
-			}
-		});
 		btnAttack3.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnAttack3.setBounds(10, 75, 240, 60);
 		buttonPanel.add(btnAttack3);
 		
 		JButton btnAttack4 = new JButton("HYPER BEAM");
-		btnAttack4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				randomNum = 30 + (int) (Math.random() * (((39) - 30) + 1));
-				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
-				attackInput(answerInput, randomNum);
-			}
-		});
 		btnAttack4.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnAttack4.setBounds(255, 75, 240, 60);
 		buttonPanel.add(btnAttack4);
 		
 		JButton btnFight = new JButton("FIGHT");
-		btnFight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				battleChoice = 1;
-				
-			}
-		});
 		btnFight.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnFight.setBounds(505, 10, 130, 125);
 		buttonPanel.add(btnFight);
 		
 		JButton btnPowerUp = new JButton("POWER UP");
-		btnPowerUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				battleChoice = 2;
-			}
-		});
 		btnPowerUp.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnPowerUp.setBounds(645, 10, 130, 125);
 		buttonPanel.add(btnPowerUp);
 		
 		JButton btnSurge = new JButton("\nSURGE");
-		btnSurge.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnSurge.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnSurge.setBounds(10, 10, 155, 125);
 		buttonPanel.add(btnSurge);
 		
 		JButton btnTime = new JButton("TIME");
-		btnTime.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnTime.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnTime.setBounds(340, 10, 155, 125);
 		buttonPanel.add(btnTime);
 		
 		JButton btnHeal = new JButton("HEAL");
-		btnHeal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnHeal.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnHeal.setBounds(175, 10, 155, 125);
 		buttonPanel.add(btnHeal);
@@ -203,6 +160,91 @@ public class mathmonBattle extends JFrame {
 	         }
 	      };
 		battleThread.start();
+		
+		btnAttack1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				randomNum = 0 + (int) (Math.random() * (((9) - 0) + 1));
+				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
+				attackInput(answerInput, randomNum);
+				try {
+					  Thread.sleep(3000);
+				} catch (InterruptedException e1) {
+					  Thread.currentThread().interrupt();
+				}
+				enemyAttackInput(randomNum);
+			}
+		});
+		
+		btnAttack2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				randomNum = 10 + (int) (Math.random() * (((19) - 10) + 1));
+				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
+				attackInput(answerInput, randomNum);
+				try {
+					  Thread.sleep(3000);
+				} catch (InterruptedException e2) {
+					  Thread.currentThread().interrupt();
+				}
+				enemyAttackInput(randomNum);
+			}
+		});
+		
+		btnAttack3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				randomNum = 20 + (int) (Math.random() * (((29) - 20) + 1));
+				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
+				attackInput(answerInput, randomNum);
+				try {
+					  Thread.sleep(3000);
+				} catch (InterruptedException e3) {
+					  Thread.currentThread().interrupt();
+				}
+				enemyAttackInput(randomNum);
+			}
+		});
+		
+		btnAttack4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				randomNum = 30 + (int) (Math.random() * (((39) - 30) + 1));
+				answerInput = JOptionPane.showInputDialog(questions[randomNum]);
+				attackInput(answerInput, randomNum);
+				try {
+					  Thread.sleep(3000);
+				} catch (InterruptedException e4) {
+					  Thread.currentThread().interrupt();
+				}
+				enemyAttackInput(randomNum);
+			}
+		});
+		
+		btnFight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				battleChoice = 1;
+				
+			}
+		});
+		
+
+		btnPowerUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				battleChoice = 2;
+			}
+		});
+
+		btnSurge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		btnTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		btnHeal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 	}
 	
 	public void update(JButton btn1, JButton btn2, JButton btn3, JButton btn4, JButton btn5, JButton btn6, JButton btn7) {
@@ -230,6 +272,29 @@ public class mathmonBattle extends JFrame {
 	    	 btn5.setVisible(true);
 	    	 btn6.setVisible(true);
 	    	 btn7.setVisible(true);
+	    	 if(gp.player.powerSurge>0) {
+	    		 btn5.setEnabled(true);
+	    	 }else {
+	    		 btn5.setEnabled(false);
+	    	 }
+	    	 if(gp.player.healingPotion>0) {
+	    		 btn6.setEnabled(true);
+	    	 }else {
+	    		 btn6.setEnabled(false);
+	    	 }
+	    	 if(gp.player.timeWarp>0) {
+	    		 btn7.setEnabled(true);
+	    	 }else {
+	    		 btn7.setEnabled(false);
+	    	 }
+	    }else if(battleChoice==3) {
+	    	 btn1.setVisible(false);
+	    	 btn2.setVisible(false);
+	    	 btn3.setVisible(false);
+	    	 btn4.setVisible(false);
+	    	 btn5.setVisible(false);
+	    	 btn6.setVisible(false);
+	    	 btn7.setVisible(false);
 	    }
 	}
 	
@@ -265,7 +330,57 @@ public class mathmonBattle extends JFrame {
 			attackDamage = 0;
 		}
 		//System.out.println("You dealt " + attackDamage + " damage!\n The enemy has " + enemyHealth + " remaining.");
-		enemyHealth -= attackDamage;
-		System.out.println("You dealt " + attackDamage + " damage!\nThe enemy has " + enemyHealth + " HP remaining.");
+		//enemyHealth -= attackDamage;
+		//System.out.println("You dealt " + attackDamage + " damage!\nThe enemy has " + enemyHealth + " HP remaining.");
+		monster.HP -= attackDamage;
+	}
+	
+	public void enemyAttackInput(int random) {
+		if(attackDamage > 0) {
+			if(random >= 0 && random <= 9) {
+				if(monster.minDamage < 26) {
+					receivedDamage = monster.minDamage + (int) (Math.random() * (((26) - monster.minDamage) + 1));
+				}else {
+					receivedDamage = 26 + (int) (Math.random() * (((monster.minDamage) - 26) + 1));
+				}
+			}else if(random >= 10 && random <= 19) {
+				if(monster.minDamage < 35) {
+					receivedDamage = monster.minDamage + (int) (Math.random() * (((35) - monster.minDamage) + 1));
+				}else {
+					receivedDamage = 35 + (int) (Math.random() * (((monster.minDamage) - 35) + 1));
+				}
+			}else if(random >= 20 && random <= 29) {
+				if(monster.minDamage < 44) {
+					receivedDamage = monster.minDamage + (int) (Math.random() * (((44) - monster.minDamage) + 1));
+				}else {
+					receivedDamage = 44 + (int) (Math.random() * (((monster.minDamage) - 44) + 1));
+				}
+			}else {
+				if(monster.minDamage < 53) {
+					receivedDamage = monster.minDamage + (int) (Math.random() * (((53) - monster.minDamage) + 1));
+				}else {
+					receivedDamage = 53 + (int) (Math.random() * (((monster.minDamage) - 53) + 1));
+				}
+			}
+		}else {
+			if(random >= 0 && random <= 9) {
+				receivedDamage = 20;
+			}else if(random >= 10 && random <= 19) {
+				receivedDamage = 30;
+			}else if(random >= 20 && random <= 29) {
+				receivedDamage = 40;
+			}else {
+				receivedDamage = 50;
+			}
+		}
+		player.HP -= receivedDamage;
+	}
+	
+	public void timer() {
+		
+	}
+	
+	public void displayQuestion(int random) {
+		
 	}
 }

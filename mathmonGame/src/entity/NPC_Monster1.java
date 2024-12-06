@@ -9,5 +9,8 @@ public class NPC_Monster1 extends Entity{
 		
 		direction = "down";
 		speed = 2;
+		HP = 100;
+		minDamage = 10;
+		maxDamage = 20;
 	}
 }

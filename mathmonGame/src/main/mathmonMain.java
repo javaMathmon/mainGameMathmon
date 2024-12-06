@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -12,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 
-public class mathmonMain extends JFrame{
+public class mathmonMain extends JFrame implements KeyListener{
 
 	private static final long serialVersionUID = 1L;
     private CustomPanel contentPane; // Custom JPanel for background drawing
@@ -68,6 +70,10 @@ public class mathmonMain extends JFrame{
 		gamePanel.requestFocusInWindow();
 		gamePanel.setUpGame();
 		gamePanel.startGameThread();
+
+		this.addKeyListener(this);
+		
+		
 	}
 	
 	private static class CustomPanel extends JPanel {
@@ -88,5 +94,31 @@ public class mathmonMain extends JFrame{
         }
     }
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {			 
+			 mathmonGamePanel gamePanel = new mathmonGamePanel();
+				setContentPane(gamePanel);
+				revalidate(); 
+				pack();
+				gamePanel.requestFocusInWindow();
+				gamePanel.setUpGame();
+				gamePanel.startGameThread();
+				//CHANGES
+		}
+	}
 
 }
