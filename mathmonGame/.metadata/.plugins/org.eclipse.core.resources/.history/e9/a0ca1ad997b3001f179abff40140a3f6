@@ -1,0 +1,169 @@
+package main;
+
+import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+
+public class mathmonChooseAPlayer extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private Image lioraImage;
+    private Image axionImage;
+    public JButton btnBack;
+    public JButton btnStart;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					mathmonChooseAPlayer frame = new mathmonChooseAPlayer();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public mathmonChooseAPlayer() {
+		setSize(1080,630);
+		setResizable(false);
+		setTitle("Choose a Player");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		
+		 try {
+	            lioraImage = ImageIO.read(getClass().getResource("/picBackgrounds/picLiora.png"));
+	            axionImage = ImageIO.read(getClass().getResource("/picBackgrounds/picAxion.png"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		
+        try {
+            Image originalImage = ImageIO.read(getClass().getResource("/picBackgrounds/picBtnBack.png"));
+            Image scaledImage = originalImage.getScaledInstance(
+                    162, 40, Image.SCALE_SMOOTH // Adjust size as needed
+                );
+            btnBack.setIcon(new ImageIcon(scaledImage));
+            btnBack.setHorizontalTextPosition(SwingConstants.CENTER); // Center the text over the icon
+            btnBack.setVerticalTextPosition(SwingConstants.CENTER);
+            btnBack.setContentAreaFilled(false); // Make the background transparent
+            btnBack.setBorderPainted(false);    // Remove the border
+            btnBack.setFocusPainted(false);     // Remove focus rectangle
+        } catch (IOException e) {
+            e.printStackTrace(); // Log the error if image loading fails
+        }
+        
+        btnBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the About frame
+                MainMenuFrame mainMenu = new MainMenuFrame();
+                mainMenu.setVisible(true); // Show the main menu
+            }
+        });
+	
+        try {
+            Image originalImage = ImageIO.read(getClass().getResource("/picBackgrounds/picBtnStart.png"));
+            Image scaledImage = originalImage.getScaledInstance(
+                    362, 150, Image.SCALE_SMOOTH // Adjust size as needed
+                );
+            btnStart.setIcon(new ImageIcon(scaledImage));
+            btnStart.setHorizontalTextPosition(SwingConstants.CENTER); // Center the text over the icon
+            btnStart.setVerticalTextPosition(SwingConstants.CENTER);
+            btnStart.setContentAreaFilled(false); // Make the background transparent
+            btnStart.setBorderPainted(false);    // Remove the border
+            btnStart.setFocusPainted(false);     // Remove focus rectangle
+        } catch (IOException e) {
+            e.printStackTrace(); // Log the error if image loading fails
+        }
+		
+        btnStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the About frame
+                mathmonMain mainMenu = new mathmonMain();
+                mainMenu.setVisible(true); // Show the main menu
+            }
+        });
+        
+		JLabel lblNewLabel = new JLabel("New label");
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+//		
+//		lblLiora = createPlayerLabel(lioraImage);
+//        lblLiora.addMouseListener(new java.awt.event.MouseAdapter() {
+//            public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                selectPlayer("Liora");
+//            }
+//        });
+//
+//        lblAxion = createPlayerLabel(axionImage);
+//        lblAxion.addMouseListener(new java.awt.event.MouseAdapter() {
+//            public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                selectPlayer("Axion");
+//            }
+//        });
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(269)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+					.addGap(225)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(340, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGap(145)
+					.addComponent(btnBack)
+					.addPreferredGap(ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
+					.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+					.addGap(77))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addContainerGap(186, Short.MAX_VALUE)
+									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+									.addGap(133))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(178)
+									.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+									.addGap(141)))
+							.addComponent(btnBack)))
+					.addContainerGap(98, Short.MAX_VALUE))
+		);
+		contentPane.setLayout(gl_contentPane);
+	}
+}

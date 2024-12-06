@@ -34,7 +34,7 @@ public class mathmonAbout extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
+				try { 
 					mathmonAbout frame = new mathmonAbout();
 					frame.setVisible(true);
 				} catch (Exception e) {

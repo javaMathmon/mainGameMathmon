@@ -113,8 +113,8 @@ public class MainMenuFrame extends JFrame {
 
         btnStart.addActionListener(e -> {
             dispose(); // Close the Main Menu
-            mathmonMain gameFrame = new mathmonMain();
-            gameFrame.setVisible(true); // Show the Game Frame
+            mathmonChooseAPlayer choosePlayerFrame = new mathmonChooseAPlayer();
+            choosePlayerFrame.setVisible(true); // Show the Game Frame
         });
 
         btnInstructions.addActionListener(e -> {

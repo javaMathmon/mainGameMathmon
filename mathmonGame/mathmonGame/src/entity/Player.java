@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
 import main.KeyHandler;
+import main.mathmonChooseAPlayer;
 import main.mathmonGamePanel;
 
 
@@ -17,7 +17,7 @@ public class Player extends Entity{
 	public final int screenX;
 	public final int screenY;
 	public int powerSurge, healingPotion, timeWarp; 
-	
+	public mathmonChooseAPlayer playerPic = new mathmonChooseAPlayer();
 	public Player(mathmonGamePanel gp, KeyHandler keyH) {
 		super(gp);
 		this.keyH =keyH;
@@ -45,18 +45,36 @@ public class Player extends Entity{
 		direction = "down";
 	}
 	public void getPlayerImage() {
-		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_right_2.png"));
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+		
+			if (mathmonChooseAPlayer.selectedPlayer == "Liora") {
+				try {
+					up1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_up_1.png"));
+					up2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_up_2.png"));
+					down1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_down_1.png"));
+					down2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_down_2.png"));
+					left1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_left_1.png"));
+					left2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_left_2.png"));
+					right1 = ImageIO.read(getClass().getResourceAsStream("/player/girl_right_1.png"));
+					right2 = ImageIO.read(getClass().getResourceAsStream("/player/girl_right_2.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}if (mathmonChooseAPlayer.selectedPlayer == "Axion") {
+				try {
+					up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
+					up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
+					down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
+					down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
+					left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
+					left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
+					right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
+					right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 	}
 	
 	public void update() {
