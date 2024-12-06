@@ -24,7 +24,6 @@ public class Player extends Entity{
 	public int level;
 	public int powerSurge, healingPotion, timeWarp, lives; 
 	
-	public int powerSurge, healingPotion, timeWarp; 
 	public mathmonChooseAPlayer playerPic = new mathmonChooseAPlayer();
 	public Player(mathmonGamePanel gp, KeyHandler keyH) {
 		super(gp);
