@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import battle.mathmonBattle;
+
 public class mathmonOpening extends JFrame implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
@@ -92,10 +94,19 @@ public class mathmonOpening extends JFrame implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {			 
 			dispose(); // Close the Main Menu
             EventQueue.invokeLater(() -> {
-                MainMenuFrame mainFrame = new MainMenuFrame();
-                mainFrame.setVisible(true);
-                mainFrame.toFront(); // Bring About Frame to front
-                mainFrame.requestFocus(); // Ensure About Frame receives focus
+//                MainMenuFrame mainFrame = new MainMenuFrame();
+                mathmonBattle mainFrame;
+				try {
+					mainFrame = new mathmonBattle(null);
+
+	                mainFrame.setVisible(true);
+	                mainFrame.toFront(); // Bring About Frame to front
+	                mainFrame.requestFocus(); // Ensure About Frame receives focus
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
             });
 		}
 	}

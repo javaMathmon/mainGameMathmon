@@ -7,11 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import main.mathmonGamePanel;
-import main.mathmonMain;
 import entity.NPC_Monster1;
 import entity.Player;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -130,19 +128,19 @@ public class mathmonBattle extends JFrame {
 		
 		JLabel lblPlayer = new JLabel("");
 		lblPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlayer.setIcon(new ImageIcon("C:\\github\\mainGameMathmon\\mathmonGame\\mathmonGame\\res\\player\\girl_up_2.png"));
-		lblPlayer.setBounds(150, 304, 581, 236);
+		lblPlayer.setIcon(new ImageIcon("C:\\github\\mainGameMathmon\\mathmonGame\\res\\player\\girl_up_2.png"));
+		lblPlayer.setBounds(150, 304, 387,  581);
 		battlePanel.add(lblPlayer);
 
 		JLabel lblEnemy = new JLabel("");
 		lblEnemy.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnemy.setIcon(new ImageIcon("C:\\github\\mainGameMathmon\\mathmonGame\\mathmonGame\\res\\objects\\ruby.png"));
+		lblEnemy.setIcon(new ImageIcon("C:\\github\\mainGameMathmon\\mathmonGame\\res\\objects\\ruby.png"));
 		lblEnemy.setBounds(575, 124, 181, 136);
 		battlePanel.add(lblEnemy);
 		
 		JLabel lblBackground = new JLabel("");
 		lblBackground.setVerticalAlignment(SwingConstants.CENTER);
-		lblBackground.setIcon(new ImageIcon("C:\\github\\mainGameMathmon\\mathmonGame\\mathmonGame\\res\\battle\\background1.png"));
+		lblBackground.setIcon(new ImageIcon("C:\\github\\mainGameMathmon\\mathmonGame\\res\\battle\\battleBG.png"));
 		lblBackground.setBounds(0, 0, 800, 450);
 		battlePanel.add(lblBackground);
 		
@@ -299,9 +297,9 @@ public class mathmonBattle extends JFrame {
 	}
 	
 	public void importQuestions()  throws IOException {
-		BufferedReader input1 = new BufferedReader (new FileReader("C:\\github\\mainGameMathmon\\mathmonGame\\mathmonGame\\res\\battle\\questions.txt"));
+		BufferedReader input1 = new BufferedReader (new FileReader("C:\\github\\mainGameMathmon\\mathmonGame\\res\\battle\\questions.txt"));
 		String question = input1.readLine();
-		BufferedReader input2 = new BufferedReader (new FileReader("C:\\github\\mainGameMathmon\\mathmonGame\\mathmonGame\\res\\battle\\answers.txt"));
+		BufferedReader input2 = new BufferedReader (new FileReader("C:\\github\\mainGameMathmon\\mathmonGame\\res\\battle\\answers.txt"));
 		String answer = input2.readLine();
 		
 		while(questionCount<40) {
