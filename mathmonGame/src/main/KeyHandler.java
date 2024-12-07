@@ -12,6 +12,7 @@ public class KeyHandler implements KeyListener{
 
 	mathmonGamePanel gp;
 	public boolean upPressed, downPressed, leftPressed, rightPressed; 
+	public boolean checkDrawTime = false;
 	
 	public KeyHandler(mathmonGamePanel gp) {
 		this.gp = gp;
@@ -37,6 +38,15 @@ public class KeyHandler implements KeyListener{
 				gp.gameState = gp.pauseState;
 			}else if(gp.gameState == gp.pauseState) {
 				gp.gameState = gp.playState;
+			}
+		}
+		
+		//Debug
+		if (code == KeyEvent.VK_T) { 
+			if(checkDrawTime == false) {
+				checkDrawTime = true;
+			}else if(checkDrawTime == true) {
+				checkDrawTime = false;
 			}
 		}
 	}

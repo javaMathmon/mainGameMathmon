@@ -19,11 +19,7 @@ public class Player extends Entity{
 	
 	public final int screenX;
 	public final int screenY;
-	public int maxlife;
-	public int life;
-	public int level;
-	public int powerSurge, healingPotion, timeWarp, lives; 
-	
+	public int powerSurge, healingPotion, timeWarp, lives, level;
 	public mathmonChooseAPlayer playerPic = new mathmonChooseAPlayer();
 	public Player(mathmonGamePanel gp, KeyHandler keyH) {
 		super(gp);
@@ -42,6 +38,7 @@ public class Player extends Entity{
 		
 		HP = 100;
 		lives = 3;
+		level = 1;
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -53,10 +50,6 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 21;
 		speed = 3;
 		direction = "down";
-		
-		level = 1;
-		maxlife = 3;
-		life = maxlife;
 	}
 	public void getPlayerImage() {
 		
@@ -112,6 +105,10 @@ public class Player extends Entity{
 			int objIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
 			
+			//Check NPC collision
+			int npcIndex = gp.cChecker.checkEntity(this, gp.monster);
+			interactNPC(npcIndex);
+			
 			//if collision is false, player can move
 			if(collisionOn == false) {
 				switch(direction) {
@@ -131,7 +128,9 @@ public class Player extends Entity{
 				}
 				spriteCounter = 0;
 			}
-		}
+		}/*else {
+			spriteNum = 1;
+		}*/ // para daw nakatayo lang pag nakatigil 
 	}
 	
 	public void pickUpObject(int index) {
@@ -142,34 +141,40 @@ public class Player extends Entity{
 			case("Power Surge"):
 				powerSurge++;
 				gp.obj[index] = null;
-				System.out.println("Power Surge: " + powerSurge);
-
-				if(powerSurge==2) {
-					mathmonBattle newBattle = null;
-					try {
-						newBattle = new mathmonBattle(gp);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					gp.gameState = gp.pauseState;
-					newBattle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					//newBattle.startBattleThread();
-					newBattle.setVisible(true);
-				}
+				//System.out.println("Power Surge: " + powerSurge);
+				gp.ui.showMessage("Power Surge found!");
 				break;
 			case("Healing Potion"):
 				healingPotion++;
 				gp.obj[index] = null;
-				System.out.println("Healing Potion: " + healingPotion);
+				//System.out.println("Healing Potion: " + healingPotion);
+				gp.ui.showMessage("Healing Potion found!");
 				break;
 			case("Time Warp"):
 				timeWarp++;
 				gp.obj[index] = null;
-				System.out.println("Time Warp: " + timeWarp);
+				//System.out.println("Time Warp: " + timeWarp);
+				gp.ui.showMessage("Time Warp found!");
 				break;
 			}
 			gp.playSE(4);
+		}
+	}
+	
+	public void interactNPC(int i) {
+		if(i != 999) {
+			mathmonBattle newBattle = null;
+			try {
+				newBattle = new mathmonBattle(gp, i, Math.abs(i%4), this);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			gp.gameState = gp.pauseState;
+			gp.music.stop();
+			newBattle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			//newBattle.startBattleThread();
+			newBattle.setVisible(true);
 		}
 	}
 	

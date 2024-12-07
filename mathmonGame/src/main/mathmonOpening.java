@@ -95,14 +95,14 @@ public class mathmonOpening extends JFrame implements KeyListener {
 			dispose(); // Close the Main Menu
             EventQueue.invokeLater(() -> {
 //                MainMenuFrame mainFrame = new MainMenuFrame();
-                mathmonBattle mainFrame;
+            	mathmonMain mainFrame;
 				try {
-					mainFrame = new mathmonBattle(null);
+					mainFrame = new mathmonMain();
 
 	                mainFrame.setVisible(true);
 	                mainFrame.toFront(); // Bring About Frame to front
 	                mainFrame.requestFocus(); // Ensure About Frame receives focus
-				} catch (IOException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

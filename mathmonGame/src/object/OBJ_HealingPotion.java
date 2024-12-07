@@ -15,8 +15,8 @@ public class OBJ_HealingPotion extends SuperObject {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		Entity entity = new Entity(null);
-		entity.healValue = 1;
+		//Entity entity = new Entity(null);
+		//entity.healValue = 1;
 		collision = true;
 	}
 }
